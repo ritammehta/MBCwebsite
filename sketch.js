@@ -1,6 +1,9 @@
 var stars = [];
 var dock11;
 var arcade;
+var jesse;
+var kevin;
+var kyle;
 var titleTimevar = 0;
 var fontpoint = 12;
 var fontyfonty = 150;
@@ -8,12 +11,21 @@ var greenFill = 1;
 var openText = "MBC PRESENTS:"
 var gameName = "IMPROV QUEST"
 var startGame;
-var choosePlayer = 0;
-var playerChosen;
+var jesseX;
+var jesseY;
+var kevinX;
+var kevinY;
+var kyleX;
+var kyleY;
+var character;
+// var playMe;
 
 function preload(){
   dock11 = loadFont('assets/heavy_dock11.otf');
-  arcade = loadFont('assets/ARCADECLASSIC.ttf')
+  arcade = loadFont('assets/ARCADECLASSIC.ttf');
+  jesse = loadImage('assets/jesse.png');
+  kyle = loadImage('assets/kyle.png');
+  kevin = loadImage('assets/kevin.png');
 }
 
 function setup() {
@@ -26,6 +38,13 @@ function setup() {
 	}
   starDraw();
   fill('green');
+  imageMode(CENTER);
+  jesseX = windowWidth/4;
+  jesseY = windowHeight/2;
+  kevinX = 2*windowWidth/4;
+  kevinY = windowHeight/2;
+  kyleX = 3*windowWidth/4;
+  kyleY = windowHeight/2;
 }
 
 function draw() {
@@ -39,11 +58,11 @@ function draw() {
     titleTime2();
   }
   if (titleTimevar == 2){
-    background('black')
-    starDraw();
-    pacMan(mouseX,mouseY);
+    choosePlayer();
   }
-
+  if(titleTimevar == 3){
+    playGame();
+  }
 }
 
 function pacMan(xPos, yPos){
@@ -54,7 +73,8 @@ function pacMan(xPos, yPos){
 }
 
 function starDraw(){
-	fill('white')
+  background('black');
+	fill('white');
 	for(i = 0; i < 200; i++){
 		ellipse(stars[2*i], stars[(2*i)+1], 3);
 		}
@@ -93,19 +113,53 @@ function titleTime2(){
 }
 
 function mouseClicked(){
-  if(mouseX < (windowWidth/2 + windowWidth/6) && mouseX > (windowWidth/2 - windowWidth /6)
-  && mouseY > (windowHeight/2 + windowHeight / 6 - windowHeight/30) && mouseY < (windowHeight/2 + windowHeight / 6 + windowHeight/30)){
-    begin();
+  if(titleTimevar == 1){
+    if(mouseX < (windowWidth/2 + windowWidth/6) && mouseX > (windowWidth/2 - windowWidth /6)
+    && mouseY > (windowHeight/2 + windowHeight / 6 - windowHeight/30) && mouseY < (windowHeight/2 + windowHeight / 6 + windowHeight/30)){
+      begin();
+    }
+  }
+  if(titleTimevar == 2){
+    if(mouseX < (jesseX + 50) && mouseX > (jesseX - 50) && mouseY > (jesseY - 50) && mouseY < (jesseY + 50)){
+      character = "jesse";
+      titleTimevar = 3;
+    }
+    if(mouseX < (kevinX + 50) && mouseX > (kevinX - 50) && mouseY > (kevinY - 50) && mouseY < (kevinY + 50)){
+      character = "kevin";
+      titleTimevar = 3;
+    }
+    if(mouseX < (kyleX + 50) && mouseX > (kyleX - 50) && mouseY > (kyleY - 50) && mouseY < (kyleY + 50)){
+      character = "kyle";
+      titleTimevar = 3;
+    }
   }
 }
-
-
 
 function begin(){
   titleTimevar = 2;
 }
 
 function choosePlayer(){
+  textSize(30);
   starDraw();
+  image(jesse, jesseX, jesseY, 100, 100);
+  text("Jesse", jesseX, jesseY + 75);
+  image(kevin, kevinX, kevinY, 100, 100);
+  text("Kevin", kevinX, kevinY + 75);
+  image(kyle, kyleX, kyleY,100,100);
+  text("Kyle", kyleX, kyleY + 75)
+}
 
+function playGame(){
+  starDraw();
+  if (character == "jesse"){
+    playMe = jesse;
+  }
+  else if (character == "kevin"){
+    playMe = kevin;
+  }
+  else if (character == "kyle"){
+    playMe = kyle;
+  }
+  image(playMe, mouseX, windowHeight - 100, 100, 100);
 }
