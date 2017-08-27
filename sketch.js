@@ -18,7 +18,17 @@ var kevinY;
 var kyleX;
 var kyleY;
 var character;
-// var playMe;
+var playMe;
+var score = 0;
+var itemSpeed = 10;
+var itemY = 0;
+var itemX = random(0, windowWidth);
+var item;
+var itemGood;
+var itemBad;
+var jesseGood;
+var jesseBad;
+var goodOrBad = true;
 
 function preload(){
   dock11 = loadFont('assets/heavy_dock11.otf');
@@ -26,6 +36,8 @@ function preload(){
   jesse = loadImage('assets/jesse.png');
   kyle = loadImage('assets/kyle.png');
   kevin = loadImage('assets/kevin.png');
+  jesseGood = loadImage('assets/jesseGood.JPG');
+  jesseBad = loadImage('assets/jesseBad.JPG');
 }
 
 function setup() {
@@ -152,8 +164,14 @@ function choosePlayer(){
 
 function playGame(){
   starDraw();
+  textSize(40);
+  text (score, windowWidth/2, 100);
+  textSize(30);
+  text ("Pick up good items! avoid bad items!", windowWidth / 2, 50);
   if (character == "jesse"){
     playMe = jesse;
+    itemGood = jesseGood;
+    itemBad = jesseBad;
   }
   else if (character == "kevin"){
     playMe = kevin;
@@ -162,4 +180,38 @@ function playGame(){
     playMe = kyle;
   }
   image(playMe, mouseX, windowHeight - 100, 100, 100);
+  if(goodOrBad == true){
+    item = itemGood;
+  }
+  else{
+    item = itemBad;
+  }
+  image(itel, itemX, itemY, 50, 50);
+  itemY = itemY + itemSpeed;
+  if(itemY >= windowHeight - 10){
+    itemY = 0;
+    goodOrBad = chooseGood();
+    itemX = random(0, windowWidth);
+  }
+  else if(itemY > windowHeight - 150 && itemY < windowHeight + 50 && itemX < mouseX + 50 && itemY > mouseX - 50){
+    if(goodOrBad == true){
+      score = score + 1;
+    }
+    else{
+      score = score - 1;
+    }
+    itemY = 0;
+    goodOrBad = chooseGood();
+    itemX = random(0, windowWidth);
+  }
+}
+
+function chooseGood(){
+  var gOrB = random(0,2);
+  if (gOrB == 0){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
