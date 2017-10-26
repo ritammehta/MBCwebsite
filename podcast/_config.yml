@@ -17,8 +17,8 @@ title: "A2 Z: An Improvised Podcast"
 email: ritmehta@umich.edu
 description: >- # this means to ignore newlines until "baseurl:"
   Everything we do here is made up. Subscribe for fun! New episodes every Thursday.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/podcast" # the subpath of your site, e.g. /blog
+url: "http://umich.edu/~mbimprov/podcast" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
 github_username:  mehtaritam
 
